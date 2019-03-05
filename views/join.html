@@ -1,13 +1,36 @@
 <!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>회원 가입 페이지</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" placeholder="이름" id="userName"><br>
+    <input type="text" placeholder="아이디" id="userId"><br>
+    <input type="password" placeholder="비밀번호" id="userPassword"><br>
+    <button type="button" onclick="join()">가입</button>
+</body>
+<script>
+    function join(){
+        var name_input = $("#userName").val();
+        var password_input = $("#userPassword").val();
+        var id_input = $("#userId").val();
+        console.log(name_input, password_input, id_input);
 
-    <head>
-        <meta charset="utf-8">
-        <title>회원 가입 페이지</title>
-    </head>
-    <body>
-        <input type="text" placeholder="이름"><br>
-        <input type="text" placeholder="아이디"><br>
-        <input type="text" placeholder="비밀번호"><br>
-        <button type="button">가입</button>
-    </body>
+
+        $.ajax({
+        url:'http://localhost:3000/join',
+        type : 'POST',
+        data : {
+        name : name_input,
+         password : password_input,
+         id : id_input
+        },
+        success:function(data){
+            console.log(data);
+        }
+    })
+
+    }
+</script>
 </html>
