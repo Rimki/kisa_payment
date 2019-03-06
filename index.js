@@ -64,9 +64,9 @@ app.get('/designSample',function(req,res){
 })
 /
 app.get('/', function (req, res) {
-    request('https://testapi.openapi.open-platform.or.kr/account/balance', function (error, response, body) {
+    request('https://openapi.open-platform.or.kr/account/balance', function (error, response, body) {
       console.log('body:', body); // Print the HTML for the Google homepage.
-      var balance=Body.balance_amt;
+      var balance=body.balance_amt;
       console.log(balance);
       res.send(body);
     });
