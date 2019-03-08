@@ -195,7 +195,7 @@ app.post('/withdraw',function(req,res){
             fintech_use_num : '199004072057725907018697',
             tran_amt : '1000',
             tran_dtime : '20181111143333',
-            cms_no : '1234567890123456'
+            
         }
 
         };
