@@ -1,0 +1,30 @@
+<html>
+    <body>
+
+    </body>
+        <script type="text/javascript" src="scripts/jquery.js"></script>
+        <script>
+        function qs(key) {
+        key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+        var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
+        return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+    }
+        var fintech_use_num = qs('fintech_use_num');
+        var accessToken = localStorage.getItem('accessToken');
+        $.ajax({
+        url : "/amount",
+        type : "POST",
+        data : {
+            accessToken : accessToken,
+            fintech_use_num : fintech_use_num
+        },
+        success : function(data){
+            console.log(data);
+           document.write(data);
+        }
+    });
+            
+            
+        </script>
+    
+</html>

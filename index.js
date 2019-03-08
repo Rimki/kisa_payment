@@ -31,7 +31,9 @@ app.get('/signup',function(req,res){
 app.get('/login',function(req,res){
     res.render('login');
 })
-
+app.get('/amount',function(err,res){
+    res.render('amount');
+})
 app.get('/authResult',function(req,res){
    var auth_code = req.query.code;
    var getTokenUrl = "https://testapi.open-platform.or.kr/oauth/2.0/token"
@@ -121,8 +123,8 @@ app.post('/user',function(req,res){
 })
 
 app.get('/balance',function(req,res){
-    var accessToken = req.body.accessToken;
-    var fintech_use_num = req.body.fintech_use_num;
+    var accessToken ="191b2bf1-1d87-45d2-a8ae-387b372b814a";
+    var fintech_use_num = "199004072057725907018697";
     var requestURL = "https://testapi.open-platform.or.kr/v1.0/account/balance?fintech_use_num="+fintech_use_num+"&tran_dtime=20190307040000";
 
     var option = {
@@ -160,6 +162,88 @@ app.get('/list',function(req,res){
         res.json(data);
     })
 })
+app.post('/amount',function(req,res){
+    var accessToken= req.body.accessToken;
+    var fintech_use_num = req.body.fintech_use_num;
+    var requestURL = "https://testapi.open-platform.or.kr/v1.0/account/balance?fintech_use_num="+fintech_use_num+"&tran_dtime=20190307040000";
 
+    var option = {
+        method :"GET",
+        url : requestURL,
+        headers : {
+            "Authorization" : "Bearer " + accessToken   
+        }
+    }
+    request(option,function(err,response,body){
+        var data = JSON.parse(body);
+        res.json(data);
+    })
+})
 
+app.post('/withdraw',function(req,res){
+    var accessToken = "191b2bf1-1d87-45d2-a8ae-387b372b814a";
+    var getTokenUrl = "https://testapi.open-platform.or.kr/v1.0/transfer/withdraw";
+    var option = {
+        method : "POST",
+        url : getTokenUrl,
+        headers : {
+            "Authorization" : "Bearer " + accessToken ,
+            "Content-Type" : " application/json; charset=UTF-8"
+        },
+        json: { 
+            dps_print_content : "coffee",
+            fintech_use_num : '199004072057725907018697',
+            tran_amt : '1000',
+            tran_dtime : '20181111143333',
+            cms_no : '1234567890123456'
+        }
+
+        };
+        request(option,function(err,response,body){
+            if(err)throw err;
+            else{
+               // console.log(body);
+               
+                res.send(body);
+            }
+        })
+    })
+app.get('/deposit',function(req,res){
+    var accessToken = "191b2bf1-1d87-45d2-a8ae-387b372b814a";
+    var getTokenUrl = "https://testapi.open-platform.or.kr/v1.0/transfer/deposit";
+    var option = {
+        method : "POST",
+        url : getTokenUrl,
+        headers : {
+            "Authorization" : "Bearer " + accessToken ,
+            "Content-Type" : " application/json; charset=UTF-8"
+        },
+        json: { 
+            wd_print_content : "환불",
+            req_cnt : '199004072057725907018697',
+            req_list : {
+             /*   tran_no : '1',
+                fintech_use_num : '199004072057725907018697',
+                print_content : "환불",
+                tran_amt : '500',*/
+            },
+            
+        }
+
+        };
+        request(option,function(err,response,body){
+            if(err)throw err;
+            else{
+               // console.log(body);
+               res.send(body);
+            }
+        })
+})
+
+app.get('/qrcode',function(req,res){
+    res.render('qrcode');
+})
+app.get('/qrreader',function(req,res){
+    res.render('qrreader');
+})
 app.listen(3000);

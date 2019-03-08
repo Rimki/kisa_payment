@@ -219,7 +219,8 @@ function login(){
         },
         dataType :"JSON"
         ,success : function(data){
-            localStorage.setItem("userAccessToken",data);
+            localStorage.setItem("accessToken", data[0].accessToken);
+         localStorage.setItem("useseqnum", data[0].useseqnum);
         }
     });
 }
